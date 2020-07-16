@@ -43,7 +43,7 @@ export default ({ card, spaceName, dropType, dragType }) => {
                         ref={provided.innerRef}
                         style={getListStyle(snapshot.isDraggingOver && name === 'space')}
                     >
-                        {name !== 'space' && !snapshot.isDraggingOver ? <Draggable
+                        {name !== 'space' ? <Draggable
                             type={dragType}
                             index={0}
                             key={name}
@@ -54,12 +54,10 @@ export default ({ card, spaceName, dropType, dragType }) => {
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}>
-                                    {name === 'space' ? '' : name}<br />
-                                    {dropType}<br />{dragType}
+                                    {name === 'space' ? '' : name}
                                 </div>
                             )}
                             </Draggable> : <div style={CardMechanics.style(card)}> {name === 'space' ? '' : name}
-                            {dropType}
                             </div>}
                         {provided.placeholder}
                     </div>)

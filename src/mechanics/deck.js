@@ -14,7 +14,7 @@ const create = () => {
 
 const shuffle = deck => {
     for (let i = 0; i < deck.length; i++) {
-        const newIndex = Math.floor(Math.random() * 52);
+        const newIndex = Math.floor(Math.random() * deck.length);
         const placeholder = {...deck[i]};
         deck[i] = {...deck[newIndex]};
         deck[newIndex] = placeholder;

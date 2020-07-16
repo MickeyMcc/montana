@@ -34,6 +34,10 @@ export default ({ deck }) => {
         return `${card.number}#${card.suit}`
     }
 
+    const onRedeal = () => {
+        setLayout(boardMechanics.redeal(layout));
+    }
+
     return (
         <DragDropContext onDragEnd={onDragEnd}>
         <div style={{ width: '100%' }}>
@@ -41,7 +45,7 @@ export default ({ deck }) => {
                 <div key={rowIndex} style={{ marginTop: '10px', display: 'flex', flex: 1, flexDirection: 'row'}}>
                     {row.map((card, cardIndex) => <Card
                         spaceName={`${rowIndex}x${cardIndex}`} 
-                        key={card.name === 'space' ? `space${cardIndex}`: card.name} 
+                        key={card.name === 'space' ? `space${cardIndex}${rowIndex}`: card.name} 
                         card={card}
                         dropType={getDropType(card, layout[rowIndex][cardIndex - 1], cardIndex)} 
                         dragType={getDragType(card)}
@@ -49,7 +53,7 @@ export default ({ deck }) => {
                 </div>
             )}
         </div>
-
+        <button style={{ marginTop: '24px' }} onClick={onRedeal}>SHUFFLE!</button>
         </DragDropContext>
     );
 };
