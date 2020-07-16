@@ -1,5 +1,3 @@
-import React from 'react';
-
 const suits = {
     1: 'Spades',
     2: 'Hearts',
@@ -23,49 +21,67 @@ const names = {
     13: 'King',
 };
 
-class Card {
-    constructor(number, suit) {
-        if (!number && !suit) {
-            this.card = {
-                name: 'space',
-            }
-        } else {
-            this.card = {
-                number,
-                suit,
-                name: `${names[number]} of ${suits[suit]}`,
-            }
+const create = (number, suit) => {
+    let card;
+    if (!number && !suit) {
+        card = {
+            name: 'space',
         }
-        this.cardStyle = this.style();
+    } else {
+        card = {
+            number,
+            suit,
+            name: `${names[number]} of ${suits[suit]}`,
+            followingCard: `${names[number + 1]} of ${suits[suit]}`
+        }
     }
-
-    style() {
-        let styleObj = {
-            display: 'flex',
-            color: 'black',
-            borderRadius: '5px',
-            marginLeft: '10px',
-            height: '120px',
-            width: '80px',
-            borderWidth: '2px',
-            borderStyle: 'solid',
-            alignItems: 'center',
-            boxSizing: 'border-box',
-
-        }
-        if (this.card.name === 'space') {
-            return {
-                ...styleObj,
-                color: 'black',
-                borderColor: 'lightGrey',
-            };
-        }
-        const suitStyle = {
-            borderColor: this.card.suit % 2 ? 'black': 'red',
-            borderStyle: this.card.suit <=2 ? 'solid' : 'dashed',
-        }
-        return { ...styleObj, ...suitStyle };
-    }
+    card.highlight = false;
+    return card;
 }
 
-export default Card;
+const onClick = (card) => {
+    console.log('click')
+    return toggleHighlight(card);
+}
+
+const toggleHighlight = (card) => {
+    console.log('highlight', !highlight)
+    card.highlight = !card.highlight;
+    return card
+}
+
+const style = (card) => {
+    let styleObj = {
+        display: 'flex',
+        color: 'black',
+        borderRadius: '5px',
+        marginLeft: '10px',
+        height: '120px',
+        width: '80px',
+        borderWidth: '2px',
+        borderStyle: 'solid',
+        alignItems: 'center',
+        boxSizing: 'border-box',
+        backgroundColor: card.highlight ? 'lightBlue' : 'white',
+    }
+    if (card.name === 'space') {
+        return {
+            ...styleObj,
+            color: 'black',
+            borderColor: 'lightGrey',
+            backgroundColor: 'transparent'
+        };
+    }
+    const suitStyle = {
+        borderColor: card.suit % 2 ? 'black': 'red',
+        borderStyle: card.suit <=2 ? 'solid' : 'dashed',
+    }
+    return { ...styleObj, ...suitStyle };
+}
+
+export default {
+    toggleHighlight,
+    style,
+    onClick,
+    create,
+}
